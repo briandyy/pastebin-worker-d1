@@ -15,31 +15,36 @@ rules = [
 
 [[routes]]
 # Refer to https://developers.cloudflare.com/workers/wrangler/configuration/#routes
-pattern = "shz.al"
+pattern = "pastes.lwd-temp.top"
 custom_domain = true
 
-[[kv_namespaces]]
-binding = "PB"  # do not touch this
-id = "cc398e983a234aa19de5ea6af571a483"  # id of your KV namespace
+# [[kv_namespaces]]
+# binding = "PB"  # do not touch this
+# id = "cc398e983a234aa19de5ea6af571a483"  # id of your KV namespace
+
+[[d1_databases]]
+binding = "DB"
+database_name = "pastebin-worker"
+database_id = "f7cffaa0-47d3-47ba-839c-6d627d55c7e9"
 
 [vars]
 # must be consistent with your routes
-BASE_URL = "https://shz.al"
+BASE_URL = "https://pastes.lwd-temp.top"
 
 # url to repo, displayed in index page
-REPO = "https://github.com/SharzyL/pastebin-worker"
+REPO = "https://github.com/lwd-temp/pastebin-worker-"
 
 # url to favicon
 FAVICON = "https://sharzy.in/favicon-32x32.png"
 
 # the name displayed in TOS
-TOS_MAINTAINER = "Sharzy"
+TOS_MAINTAINER = "Sunset"
 
 # the email displayed in TOS
-TOS_MAIL = "pb@shz.al"
+TOS_MAIL = "i@lwd-temp.top"
 
 # Cache-Control max-age for static pages
 CACHE_STATIC_PAGE_AGE = 7200
 
-# Cache-Control max-age for static pages
+# Cache-Control max-age for pastes
 CACHE_PASTE_AGE = 600
