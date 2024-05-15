@@ -10,13 +10,13 @@
   })
 */
 
-function isExpired(item, env) {
+function isExpired(item) {
   // return True if item is expired
   if (item.metadata.expirationTtl === undefined) {
     return false
   } else {
     const lastModified = item.metadata?.lastModified
-    const lastModifiedUnix = Date.parse(dateString) / 1000 // In seconds
+    const lastModifiedUnix = Date.parse(lastModified) / 1000 // In seconds
     const shouldExpireTime = lastModifiedUnix + item.metadata.expirationTtl
     const nowUnix = Date.now() / 1000
     return nowUnix > shouldExpireTime
