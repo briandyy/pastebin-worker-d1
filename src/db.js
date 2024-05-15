@@ -44,7 +44,8 @@ export async function DB_Get(short, env) {
   }
 
   if (isExpired(item_db, env)) {
-    DB_Delete(short, env)
+    await DB_Delete(short, env)
+    return null
   }
 
   return new Uint8Array(item_db.content)
@@ -77,7 +78,8 @@ export async function DB_GetWithMetadata(short, env) {
   }
 
   if (isExpired(item_db, env)) {
-    DB_Delete(short, env)
+    await DB_Delete(short, env)
+    return null
   }
 
   const item = {
