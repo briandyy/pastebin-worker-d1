@@ -12,6 +12,7 @@
 
 async function isExpired(item, env) {
   // return true if item is expired
+  // FIXME: Not working
   if (item.metadata.expirationTtl === undefined) {
     return false
   } else {
