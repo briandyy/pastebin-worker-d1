@@ -14,7 +14,7 @@
 
 export async function DB_Put(short, content, metadata, env) {
   return env.DB.prepare(
-    "INSERT INTO pastes (short, content, metadata) VALUES (?, ?, ?)",
+    "INSERT OR REPLACE INTO pastes (short, content, metadata) VALUES (?, ?, ?)",
   ).run(short, content, JSON.stringify(metadata))
 }
 
