@@ -8,6 +8,6 @@
 DROP TABLE IF EXISTS pastes;
 CREATE TABLE IF NOT EXISTS pastes (
     short TEXT PRIMARY KEY,
-    content TEXT,
+    content BLOB,
     metadata TEXT
 )
