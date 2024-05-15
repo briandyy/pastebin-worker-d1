@@ -34,7 +34,7 @@ You are free to deploy the pastebin on your own domain if you host your domain o
 
 1. Install `node` and `yarn`.
 
-2. Create a KV namespace on Cloudflare workers dashboard, remember its ID.
+2. Create a D1 Database on Cloudflare workers dashboard, run `schema.sql` in it, remember its ID.
 
 3. Clone the repository and enter the directory. Login to your Cloudflare account with `wrangler login`.
 
