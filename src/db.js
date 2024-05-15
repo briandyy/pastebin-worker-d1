@@ -12,6 +12,19 @@
   })
 */
 
+function isExpired(item, env) {
+  // return True if item is expired
+  if (item.expirationTtl === undefined) {
+    return false
+  } else {
+    const lastModified = item.metadata?.lastModified
+    const lastModifiedUnix = Date.parse(dateString) / 1000 // In seconds
+    const shouldExpireTime = lastModifiedUnix + item.expirationTtl
+    const nowUnix = Date.now() / 1000
+    return nowUnix > shouldExpireTime
+  }
+}
+
 export async function DB_Put(short, content, metadata, env) {
   return await env.DB.prepare(
     "INSERT OR REPLACE INTO pastes (short, content, metadata) VALUES (?, ?, ?)",
@@ -28,6 +41,10 @@ export async function DB_Get(short, env) {
   // Check existence
   if (!item_db) {
     return null
+  }
+
+  if (isExpired(item_db, env)) {
+    DB_Delete(short, env)
   }
 
   return new Uint8Array(item_db.content)
@@ -59,11 +76,13 @@ export async function DB_GetWithMetadata(short, env) {
     return null
   }
 
-  const metadata = JSON.parse(item_db.metadata)
+  if (isExpired(item_db, env)) {
+    DB_Delete(short, env)
+  }
 
   const item = {
     value: new Uint8Array(item_db.content),
-    metadata: metadata,
+    metadata: JSON.parse(item_db.metadata),
   }
 
   return item
