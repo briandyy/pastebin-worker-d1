@@ -19,7 +19,7 @@ export async function DB_Put(short, content, metadata, env) {
 }
 
 export async function DB_Get(short, env) {
-  const item_db = env.DB.prepare("SELECT * FROM pastes WHERE short = ?").get(
+  const item_db = env.DB.prepare("SELECT * FROM pastes WHERE short = ?").run(
     short,
   )
 
@@ -48,7 +48,7 @@ export async function DB_Get(short, env) {
 */
 
 export async function DB_GetWithMetadata(short, env) {
-  const item_db = env.DB.prepare("SELECT * FROM pastes WHERE short = ?").get(
+  const item_db = env.DB.prepare("SELECT * FROM pastes WHERE short = ?").run(
     short,
   )
 
