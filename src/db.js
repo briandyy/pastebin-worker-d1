@@ -3,23 +3,21 @@
 /**
   await env.PB.put(short, content, {
     expirationTtl: expire,
-    metadata: {
-      postedAt: createDate,
-      passwd: passwd,
-      filename: filename,
-      lastModified: now,
-    },
+    postedAt: createDate,
+    passwd: passwd,
+    filename: filename,
+    lastModified: now,
   })
 */
 
 function isExpired(item, env) {
   // return True if item is expired
-  if (item.expirationTtl === undefined) {
+  if (item.metadata.expirationTtl === undefined) {
     return false
   } else {
     const lastModified = item.metadata?.lastModified
     const lastModifiedUnix = Date.parse(dateString) / 1000 // In seconds
-    const shouldExpireTime = lastModifiedUnix + item.expirationTtl
+    const shouldExpireTime = lastModifiedUnix + item.metadata.expirationTtl
     const nowUnix = Date.now() / 1000
     return nowUnix > shouldExpireTime
   }
