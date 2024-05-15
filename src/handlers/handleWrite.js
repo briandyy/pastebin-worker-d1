@@ -146,7 +146,7 @@ export async function handlePostOrPut(request, env, ctx, isPut) {
     let short = undefined
     if (name !== undefined) {
       short = "~" + name
-      if ((await env.PB.get(short)) !== null)
+      if ((await DB_Get(short, env)) !== null)
         throw new WorkerError(409, `name '${name}' is already used`)
     }
     return makeResponse(await createPaste(
