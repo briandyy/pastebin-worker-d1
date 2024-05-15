@@ -25,7 +25,7 @@ custom_domain = true
 [[d1_databases]]
 binding = "DB"
 database_name = "pastebin-worker"
-database_id = "f7cffaa0-47d3-47ba-839c-6d627d55c7e9"
+database_id = "77e9dafa-8f6b-4636-94f0-1a8e6e0e5fc1"
 
 [vars]
 # must be consistent with your routes

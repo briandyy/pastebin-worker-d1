@@ -22,7 +22,7 @@ async function createPaste(env, content, isPrivate, expire, short, createDate, p
   if (short === undefined) {
     while (true) {
       short = genRandStr(short_len)
-      if ((await DB_Get(short)) === null) break
+      if ((await DB_Get(short, env)) === null) break
     }
   }
 
@@ -34,7 +34,7 @@ async function createPaste(env, content, isPrivate, expire, short, createDate, p
       filename: filename,
       lastModified: now,
     },
-  })
+  }, env)
   let accessUrl = env.BASE_URL + "/" + short
   const adminUrl = env.BASE_URL + "/" + short + params.SEP + passwd
   return {
@@ -129,7 +129,7 @@ export async function handlePostOrPut(request, env, ctx, isPut) {
 
   if (isPut) {
     const { short, passwd } = parsePath(url.pathname)
-    const item = await DB_GetWithMetadata(short)
+    const item = await DB_GetWithMetadata(short, env)
     if (item.value === null) {
       throw new WorkerError(404, `paste of name '${short}' is not found`)
     } else {

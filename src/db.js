@@ -12,18 +12,16 @@
   })
 */
 
-const database = env.DB
-
-export async function DB_Put(short, content, metadata) {
-  return database
-    .prepare("INSERT INTO pastes (short, content, metadata) VALUES (?, ?, ?)")
-    .run(short, content, JSON.stringify(metadata))
+export async function DB_Put(short, content, metadata, env) {
+  return env.DB.prepare(
+    "INSERT INTO pastes (short, content, metadata) VALUES (?, ?, ?)",
+  ).run(short, content, JSON.stringify(metadata))
 }
 
-export async function DB_Get(short) {
-  const item_db = database
-    .prepare("SELECT * FROM pastes WHERE short = ?")
-    .get(short)
+export async function DB_Get(short, env) {
+  const item_db = env.DB.prepare("SELECT * FROM pastes WHERE short = ?").get(
+    short,
+  )
 
   // Check existence
   if (!item_db) {
@@ -49,10 +47,10 @@ export async function DB_Get(short) {
     }
 */
 
-export async function DB_GetWithMetadata(short) {
-  const item_db = database
-    .prepare("SELECT * FROM pastes WHERE short = ?")
-    .get(short)
+export async function DB_GetWithMetadata(short, env) {
+  const item_db = env.DB.prepare("SELECT * FROM pastes WHERE short = ?").get(
+    short,
+  )
 
   // Check existence
   if (!item_db) {
@@ -69,6 +67,6 @@ export async function DB_GetWithMetadata(short) {
   return item
 }
 
-export async function DB_Delete(short) {
-  return database.prepare("DELETE FROM pastes WHERE short = ?").run(short)
+export async function DB_Delete(short, env) {
+  return env.DB.prepare("DELETE FROM pastes WHERE short = ?").run(short)
 }

@@ -46,7 +46,7 @@ export async function handleGet(request, env, ctx) {
 
   const disp = url.searchParams.has("a") ? "attachment" : "inline"
 
-  const item = await DB_GetWithMetadata(short, { type: "arrayBuffer" })
+  const item = await DB_GetWithMetadata(short, env)
 
   // when paste is not found
   if (item.value === null) {
