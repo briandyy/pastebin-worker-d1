@@ -10,8 +10,8 @@
   })
 */
 
-function isExpired(item) {
-  // return True if item is expired
+async function isExpired(item, env) {
+  // return true if item is expired
   if (item.metadata.expirationTtl === undefined) {
     return false
   } else {
@@ -41,7 +41,7 @@ export async function DB_Get(short, env) {
     return null
   }
 
-  if (isExpired(item_db, env)) {
+  if (await isExpired(item_db, env)) {
     await DB_Delete(short, env)
     return null
   }
@@ -75,7 +75,7 @@ export async function DB_GetWithMetadata(short, env) {
     return null
   }
 
-  if (isExpired(item_db, env)) {
+  if (await isExpired(item_db, env)) {
     await DB_Delete(short, env)
     return null
   }
