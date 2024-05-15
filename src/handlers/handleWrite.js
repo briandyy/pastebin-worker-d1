@@ -28,12 +28,12 @@ async function createPaste(env, content, isPrivate, expire, short, createDate, p
 
   await DB_Put(short, content, {
     expirationTtl: expire,
-    metadata: {
+    // metadata: {
       postedAt: createDate,
       passwd: passwd,
       filename: filename,
       lastModified: now,
-    },
+    // },
   }, env)
   let accessUrl = env.BASE_URL + "/" + short
   const adminUrl = env.BASE_URL + "/" + short + params.SEP + passwd
