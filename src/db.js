@@ -15,13 +15,15 @@
 export async function DB_Put(short, content, metadata, env) {
   return await env.DB.prepare(
     "INSERT OR REPLACE INTO pastes (short, content, metadata) VALUES (?, ?, ?)",
-  ).run(short, content, JSON.stringify(metadata))
+  )
+    .bind(short, content, JSON.stringify(metadata))
+    .run()
 }
 
 export async function DB_Get(short, env) {
-  const item_db = await env.DB.prepare(
-    "SELECT * FROM pastes WHERE short = ?",
-  ).run(short)
+  const item_db = await env.DB.prepare("SELECT * FROM pastes WHERE short = ?")
+    .bind(short)
+    .run()
 
   // Check existence
   if (!item_db) {
@@ -48,9 +50,9 @@ export async function DB_Get(short, env) {
 */
 
 export async function DB_GetWithMetadata(short, env) {
-  const item_db = await env.DB.prepare(
-    "SELECT * FROM pastes WHERE short = ?",
-  ).run(short)
+  const item_db = await env.DB.prepare("SELECT * FROM pastes WHERE short = ?")
+    .bind(short)
+    .run()
 
   // Check existence
   if (!item_db) {
@@ -68,5 +70,7 @@ export async function DB_GetWithMetadata(short, env) {
 }
 
 export async function DB_Delete(short, env) {
-  return await env.DB.prepare("DELETE FROM pastes WHERE short = ?").run(short)
+  return await env.DB.prepare("DELETE FROM pastes WHERE short = ?")
+    .bind(short)
+    .run()
 }
