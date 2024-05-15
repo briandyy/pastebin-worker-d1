@@ -10,6 +10,7 @@ import {
   parsePath,
   WorkerError,
 } from "../common.js"
+import { DB_Put, DB_Get, DB_GetWithMetadata } from "../db.js"
 
 async function createPaste(env, content, isPrivate, expire, short, createDate, passwd, filename) {
   const now = new Date().toISOString()
@@ -21,11 +22,11 @@ async function createPaste(env, content, isPrivate, expire, short, createDate, p
   if (short === undefined) {
     while (true) {
       short = genRandStr(short_len)
-      if ((await env.PB.get(short)) === null) break
+      if ((await DB_Get(short)) === null) break
     }
   }
 
-  await env.PB.put(short, content, {
+  await DB_Put(short, content, {
     expirationTtl: expire,
     metadata: {
       postedAt: createDate,
@@ -128,7 +129,7 @@ export async function handlePostOrPut(request, env, ctx, isPut) {
 
   if (isPut) {
     const { short, passwd } = parsePath(url.pathname)
-    const item = await env.PB.getWithMetadata(short)
+    const item = await DB_GetWithMetadata(short)
     if (item.value === null) {
       throw new WorkerError(404, `paste of name '${short}' is not found`)
     } else {

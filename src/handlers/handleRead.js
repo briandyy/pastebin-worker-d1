@@ -4,6 +4,7 @@ import { verifyAuth } from "../auth.js"
 import { getType } from "mime/lite.js"
 import { makeMarkdown } from "../pages/markdown.js"
 import { makeHighlight } from "../pages/highlight.js"
+import { DB_Put, DB_Get, DB_GetWithMetadata } from "../db.js"
 
 function staticPageCacheHeader(env) {
   const age = env.CACHE_STATIC_PAGE_AGE
@@ -45,7 +46,7 @@ export async function handleGet(request, env, ctx) {
 
   const disp = url.searchParams.has("a") ? "attachment" : "inline"
 
-  const item = await env.PB.getWithMetadata(short, { type: "arrayBuffer" })
+  const item = await DB_GetWithMetadata(short, { type: "arrayBuffer" })
 
   // when paste is not found
   if (item.value === null) {
