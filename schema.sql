@@ -3,11 +3,11 @@
 -- But there's no such metadata in SQLite (D1).
 -- So we create a new table for them.
 -- short: the short url (string)
--- content: the paste or file content (string)
+-- content: the paste or file content (blob)
 -- metadata: JSON string of metadata (string)
 DROP TABLE IF EXISTS pastes;
 CREATE TABLE IF NOT EXISTS pastes (
     short TEXT PRIMARY KEY,
-    content TEXT,
+    content BLOB,
     metadata TEXT
 )
