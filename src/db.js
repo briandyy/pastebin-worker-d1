@@ -30,7 +30,7 @@ export async function DB_Get(short, env) {
     return null
   }
 
-  return item_db.content
+  return new Uint8Array(item_db.content)
 }
 
 /**
@@ -62,7 +62,7 @@ export async function DB_GetWithMetadata(short, env) {
   const metadata = JSON.parse(item_db.metadata)
 
   const item = {
-    value: item_db.content,
+    value: new Uint8Array(item_db.content),
     metadata: metadata,
   }
 
