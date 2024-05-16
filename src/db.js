@@ -74,8 +74,8 @@ async function KV_Get(short, env) {
 }
 
 export async function DB_Put(short, content, metadata, env) {
-  // If content is bigger than 0.9MB, save to KV
-  if (content.length > 1024 * 1024 * 0.9) {
+  // If content is bigger than 0.95MB, save to KV
+  if (content.length > 1024 * 1024 * 0.95) {
     await KV_Put(short, content, env)
     content = "{KV_Storaged_Flag_Attention_DO_NOT_DELETE_OR_MODIFY_THIS_LINE}"
   }
