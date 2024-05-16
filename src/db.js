@@ -21,6 +21,17 @@ const expiredItemTemplate = {
   },
 }
 
+const NotExistItemTemplate = {
+  value: "Not found",
+  metadata: {
+    expirationTtl: 0,
+    postedAt: Date.toString(0), // Client never cache this
+    passwd: "",
+    filename: "",
+    lastModified: Date.toString(0),
+  },
+}
+
 async function isExpired(item, env) {
   // return true if item is expired
   const realMetadata = JSON.parse(item.metadata)
@@ -85,7 +96,7 @@ export async function DB_GetWithMetadata(short, env) {
 
   // Check existence
   if (!item_db) {
-    return null
+    return NotExistItemTemplate
   }
 
   if (await isExpired(item_db, env)) {
