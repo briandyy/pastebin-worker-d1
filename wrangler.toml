@@ -20,13 +20,13 @@ custom_domain = true
 
 [[kv_namespaces]]
 # name = "pastebin-worker"
-binding = "KV"
+binding = "KV" # DO NOT MODIFY
 id = "701a14e6aeb44a09a678f16567cb9c20"  # id of your KV namespace
 
 [[d1_databases]]
-binding = "DB"
+binding = "DB" # DO NOT MODIFY
 database_name = "pastebin-worker"
-database_id = "77e9dafa-8f6b-4636-94f0-1a8e6e0e5fc1"
+database_id = "77e9dafa-8f6b-4636-94f0-1a8e6e0e5fc1" # id of your D1 database
 
 [vars]
 # must be consistent with your routes
