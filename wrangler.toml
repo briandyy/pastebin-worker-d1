@@ -33,7 +33,7 @@ database_id = "77e9dafa-8f6b-4636-94f0-1a8e6e0e5fc1" # id of your D1 database
 BASE_URL = "https://pastes.lwd-temp.top"
 
 # url to repo, displayed in index page
-REPO = "https://github.com/lwd-temp/pastebin-worker-"
+REPO = "https://github.com/lwd-temp/pastebin-worker-d1"
 
 # url to favicon
 FAVICON = "https://sharzy.in/favicon-32x32.png"
