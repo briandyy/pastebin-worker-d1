@@ -10,18 +10,30 @@
   })
 */
 
+const expiredItemTemplate = {
+  value: "Expired paste",
+  metadata: {
+    expirationTtl: 0,
+    postedAt: "2999-12-31T00:00:00.000Z",
+    passwd: "",
+    filename: "",
+    lastModified: "2999-12-31T00:00:00.000Z",
+  },
+}
+
 async function isExpired(item, env) {
   // return true if item is expired
-  // FIXME: Not working
-  if (item.metadata.expirationTtl === undefined) {
-    return false
+  item.metadata = JSON.parse(item.metadata)
+  // Use postedAt, or use lastModified is existing
+  if (item.metadata.lastModified === undefined) {
+    var lastModified = item.metadata.postedAt
   } else {
-    const lastModified = item.metadata?.lastModified
-    const lastModifiedUnix = Date.parse(lastModified) / 1000 // In seconds
-    const shouldExpireTime = lastModifiedUnix + item.metadata.expirationTtl
-    const nowUnix = Date.now() / 1000
-    return nowUnix > shouldExpireTime
+    var lastModified = item.metadata.lastModified
   }
+  const lastModifiedUnix = Date.parse(lastModified) / 1000 // In seconds
+  const shouldExpireTime = lastModifiedUnix + item.metadata.expirationTtl
+  const nowUnix = Date.now() / 1000
+  return nowUnix > shouldExpireTime
 }
 
 export async function DB_Put(short, content, metadata, env) {
@@ -78,7 +90,8 @@ export async function DB_GetWithMetadata(short, env) {
 
   if (await isExpired(item_db, env)) {
     await DB_Delete(short, env)
-    return null
+    return expiredItemTemplate // This function is not used to check if the paste exists
+    // So it's okay to return non-null expiredItemTemplate
   }
 
   const item = {
