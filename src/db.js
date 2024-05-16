@@ -69,7 +69,8 @@ async function KV_Put(short, content, env) {
 }
 
 async function KV_Get(short, env) {
-  await env.KV.get(short, { type: "arrayBuffer" })
+  const content = await env.KV.get(short, { type: "arrayBuffer" })
+  return new Uint8Array(content)
 }
 
 export async function DB_Put(short, content, metadata, env) {
@@ -141,8 +142,9 @@ export async function DB_GetWithMetadata(short, env) {
     item_db.content ===
     "{KV_Storaged_Flag_Attention_DO_NOT_DELETE_OR_MODIFY_THIS_LINE}"
   ) {
+    const kv_content = await KV_Get(short, env)
     var item = {
-      value: await KV_Get(short, env),
+      value: kv_content,
       metadata: JSON.parse(item_db.metadata),
     }
   } else {
@@ -151,6 +153,8 @@ export async function DB_GetWithMetadata(short, env) {
       metadata: JSON.parse(item_db.metadata),
     }
   }
+
+  // console.log(item)
 
   return item
 }
