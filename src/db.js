@@ -65,11 +65,11 @@ function isExpired(item, env) {
 }
 
 async function KV_Put(short, content, env) {
-  await env.KV.put(key, value)
+  await env.KV.put(short, content)
 }
 
 async function KV_Get(short, env) {
-  await env.KV.get(key, { type: "arrayBuffer" })
+  await env.KV.get(short, { type: "arrayBuffer" })
 }
 
 export async function DB_Put(short, content, metadata, env) {
