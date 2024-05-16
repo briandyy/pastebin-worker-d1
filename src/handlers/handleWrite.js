@@ -10,7 +10,7 @@ import {
   parsePath,
   WorkerError,
 } from "../common.js"
-import { DB_Put, DB_Get, DB_GetWithMetadata } from "../db.js"
+import { DB_Put, DB_Get, DB_GetWithMetadata, safeAccess } from "../db.js"
 
 async function createPaste(env, content, isPrivate, expire, short, createDate, passwd, filename) {
   const now = new Date().toISOString()
@@ -132,7 +132,7 @@ export async function handlePostOrPut(request, env, ctx, isPut) {
   if (isPut) {
     const { short, passwd } = parsePath(url.pathname)
     const item = await DB_GetWithMetadata(short, env)
-    if (item.value === null) {
+    if (safeAccess(item, value, null) === null) {
       throw new WorkerError(404, `paste of name '${short}' is not found`)
     } else {
       const date = item.metadata?.postedAt

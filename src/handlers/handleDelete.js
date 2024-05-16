@@ -1,11 +1,11 @@
 import { parsePath, WorkerError } from "../common.js"
-import { DB_Put, DB_Get, DB_GetWithMetadata, DB_Delete } from "../db.js"
+import { DB_Put, DB_Get, DB_GetWithMetadata, DB_Delete, safeAccess } from "../db.js"
 
 export async function handleDelete(request, env, ctx) {
   const url = new URL(request.url)
   const { short, passwd } = parsePath(url.pathname)
   const item = await DB_GetWithMetadata(short, env)
-  if (item.value === null) {
+  if (safeAccess(item, value, null) === null) {
     throw new WorkerError(404, `paste of name '${short}' not found`)
   } else {
     if (passwd !== item.metadata?.passwd) {

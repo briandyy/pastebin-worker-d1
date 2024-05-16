@@ -10,6 +10,14 @@
   })
 */
 
+export function safeAccess(obj, prop, defaultValue) {
+  if (obj && typeof obj === "object" && prop in obj) {
+    return obj[prop]
+  } else {
+    return defaultValue
+  }
+}
+
 const expiredItemTemplate = {
   value: "Expired paste",
   metadata: {
@@ -32,7 +40,7 @@ const NotExistItemTemplate = {
   },
 }
 
-async function isExpired(item, env) {
+function isExpired(item, env) {
   // return true if item is expired
   const realMetadata = JSON.parse(item.metadata)
   // Use postedAt, or use lastModified is existing
@@ -65,7 +73,7 @@ export async function DB_Get(short, env) {
     return null
   }
 
-  if (await isExpired(item_db, env)) {
+  if (isExpired(item_db, env)) {
     await DB_Delete(short, env)
     return null
   }
@@ -99,7 +107,7 @@ export async function DB_GetWithMetadata(short, env) {
     return NotExistItemTemplate
   }
 
-  if (await isExpired(item_db, env)) {
+  if (isExpired(item_db, env)) {
     await DB_Delete(short, env)
     return expiredItemTemplate // This function is not used to check if the paste exists
     // So it's okay to return non-null expiredItemTemplate
