@@ -1,4 +1,5 @@
 // Cloudflare D1 SQLite DB
+import { WorkerError } from "./common.js"
 
 /**
   await env.PB.put(short, content, {
@@ -64,6 +65,12 @@ function isExpired(item, env) {
 }
 
 export async function DB_Put(short, content, metadata, env) {
+
+  // If content is bigger than 0.9MB, throw error
+  if (content.length > 1024 * 1024 * 0.9) {
+    throw new WorkerError(413, "content is too large")
+  }
+
   return await env.DB.prepare(
     "INSERT OR REPLACE INTO pastes (short, content, metadata) VALUES (?, ?, ?)",
   )
