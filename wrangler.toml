@@ -36,7 +36,7 @@ BASE_URL = "https://pastes.lwd-temp.top"
 REPO = "https://github.com/lwd-temp/pastebin-worker-d1"
 
 # url to favicon
-FAVICON = "https://sharzy.in/favicon-32x32.png"
+FAVICON = "https://jekyll.lwd-temp.top/assets/images/favicon-32x32.png"
 
 # the name displayed in TOS
 TOS_MAINTAINER = "Sunset"
