@@ -1,4 +1,4 @@
-// Cloudflare D1 SQLite DB
+// Cloudflare D1 SQLite DB and KV for big file storage
 import { WorkerError } from "./common.js"
 
 /**
@@ -64,11 +64,19 @@ function isExpired(item, env) {
   return nowUnix > shouldExpireTime
 }
 
-export async function DB_Put(short, content, metadata, env) {
+async function KV_Put(short, content, env) {
+  await env.KV.put(key, value)
+}
 
-  // If content is bigger than 0.9MB, throw error
+async function KV_Get(short, env) {
+  await env.KV.get(key, { type: "arrayBuffer" })
+}
+
+export async function DB_Put(short, content, metadata, env) {
+  // If content is bigger than 0.9MB, save to KV
   if (content.length > 1024 * 1024 * 0.9) {
-    throw new WorkerError(413, "content is too large")
+    await KV_Put(short, content, env)
+    content = "{KV_Storaged_Flag_Attention_DO_NOT_DELETE_OR_MODIFY_THIS_LINE}"
   }
 
   return await env.DB.prepare(
@@ -129,9 +137,19 @@ export async function DB_GetWithMetadata(short, env) {
     // So it's okay to return non-null expiredItemTemplate
   }
 
-  const item = {
-    value: new Uint8Array(item_db.content),
-    metadata: JSON.parse(item_db.metadata),
+  if (
+    item_db.content ===
+    "{KV_Storaged_Flag_Attention_DO_NOT_DELETE_OR_MODIFY_THIS_LINE}"
+  ) {
+    var item = {
+      value: await KV_Get(short, env),
+      metadata: JSON.parse(item_db.metadata),
+    }
+  } else {
+    var item = {
+      value: new Uint8Array(item_db.content),
+      metadata: JSON.parse(item_db.metadata),
+    }
   }
 
   return item

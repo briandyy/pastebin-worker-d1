@@ -18,9 +18,10 @@ rules = [
 pattern = "pastes.lwd-temp.top"
 custom_domain = true
 
-# [[kv_namespaces]]
-# binding = "PB"  # do not touch this
-# id = "cc398e983a234aa19de5ea6af571a483"  # id of your KV namespace
+[[kv_namespaces]]
+# name = "pastebin-worker"
+binding = "KV"
+id = "701a14e6aeb44a09a678f16567cb9c20"  # id of your KV namespace
 
 [[d1_databases]]
 binding = "DB"
