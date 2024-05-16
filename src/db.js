@@ -23,15 +23,15 @@ const expiredItemTemplate = {
 
 async function isExpired(item, env) {
   // return true if item is expired
-  item.metadata = JSON.parse(item.metadata)
+  const realMetadata = JSON.parse(item.metadata)
   // Use postedAt, or use lastModified is existing
-  if (item.metadata.lastModified === undefined) {
-    var lastModified = item.metadata.postedAt
+  if (realMetadata.lastModified === undefined) {
+    var lastModified = realMetadata.postedAt
   } else {
-    var lastModified = item.metadata.lastModified
+    var lastModified = realMetadata.lastModified
   }
   const lastModifiedUnix = Date.parse(lastModified) / 1000 // In seconds
-  const shouldExpireTime = lastModifiedUnix + item.metadata.expirationTtl
+  const shouldExpireTime = lastModifiedUnix + realMetadata.expirationTtl
   const nowUnix = Date.now() / 1000
   return nowUnix > shouldExpireTime
 }
