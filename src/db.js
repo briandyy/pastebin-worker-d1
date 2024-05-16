@@ -11,9 +11,13 @@
 */
 
 export function safeAccess(obj, prop, defaultValue) {
-  if (obj && typeof obj === "object" && prop in obj) {
-    return obj[prop]
-  } else {
+  try {
+    if (obj && typeof obj === "object" && prop in obj) {
+      return obj[prop]
+    } else {
+      return defaultValue
+    }
+  } catch (e) {
     return defaultValue
   }
 }
