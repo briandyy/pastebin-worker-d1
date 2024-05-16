@@ -1,6 +1,6 @@
 # Pastebin-worker
 
-This is a pastebin that can be deployed on Cloudflare workers. Try it on [shz.al](https://shz.al). 
+This is a pastebin that can be deployed on Cloudflare workers.
 
 **Philosophy**: effortless deployment, friendly CLI usage, rich functionality. 
 
@@ -15,6 +15,23 @@ This is a pastebin that can be deployed on Cloudflare workers. Try it on [shz.al
 8. Used as a URL shortener
 9. Customize returned mimetype
 
+## Warning
+
+This fork is:
+
+- Not tested
+- Not well documented
+- Not best practices
+- Not ready for production
+- Not well performed
+- Bad version control history
+- The developer does not know how to use JavaScript
+- I hope it works, but if not, I have no idea how to fix it
+
+Please notice that executing `schema.sql` in the DB will reset all data in the DB.
+
+Also notice that Cloudflare D1 dashboard won't consider anything unprintable, so be careful when opening it, may crash your browser.
+
 ## Usage
 
 1. You can post, update, delete your paste directly on the website (such as [shz.al](https://shz.al)). 
@@ -25,8 +42,8 @@ This is a pastebin that can be deployed on Cloudflare workers. Try it on [shz.al
 
 ## Limitations
 
-1. ~~If deployed on Cloudflare Worker free-tier plan, the service allows at most 100,000 reads and 1000 writes, 1000 deletes per day. ~~ See D1 docs for details.
-2. ~~Due to the size limit of Cloudflare KV storage, the size of each paste is bounded under 25 MB. ~~ See D1 docs for details.
+1. If deployed on Cloudflare Worker free-tier plan, the service allows at most 5 million reads and 100000 writes per day.
+2. Due to the size limit of Cloudflare D1 storage, the size of each paste is bounded under 1 MB. (TODO: D1 for less than 1 MB, KV for more than 1 MB)
 
 ## Deploy
 
