@@ -108,7 +108,8 @@ export async function DB_GetWithMetadata(short, env) {
 
   // Check existence
   if (!item_db) {
-    return NotExistItemTemplate
+    // return NotExistItemTemplate
+    return null
   }
 
   if (isExpired(item_db, env)) {
