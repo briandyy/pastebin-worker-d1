@@ -14,10 +14,10 @@ const expiredItemTemplate = {
   value: "Expired paste",
   metadata: {
     expirationTtl: 0,
-    postedAt: "2999-12-31T00:00:00.000Z",
+    postedAt: Date.toString(Date.now() / 1000 + 10), // let Client Cache reset in 10 seconds
     passwd: "",
     filename: "",
-    lastModified: "2999-12-31T00:00:00.000Z",
+    lastModified: Date.toString(Date.now() / 1000 + 10),
   },
 }
 
