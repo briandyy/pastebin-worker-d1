@@ -43,7 +43,9 @@ Also notice that Cloudflare D1 dashboard won't consider anything unprintable, so
 ## Limitations
 
 1. If deployed on Cloudflare Worker free-tier plan, the service allows at most 5 million reads and 100000 writes per day.
-2. Due to the size limit of Cloudflare D1 storage, the size of each paste is bounded under 1 MB. (TODO: D1 for less than 1 MB, KV for more than 1 MB)
+2. Due to the size limit of Cloudflare D1 storage, the size of each basic paste is bounded under 1 MB.
+3. Big files (more than 0.95 MB) are storaged in KV (metadata in D1), the size limit is 25 MB. 100000 reads per day. 1000 writes per day.
+4. To save KV writes, we do not actively delete expired big files in KV, we just overwrite them in need.
 
 ## Deploy
 
