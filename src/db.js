@@ -55,6 +55,10 @@ function isExpired(item, env) {
   }
   const lastModifiedUnix = Date.parse(lastModified) / 1000 // In seconds
   const shouldExpireTime = lastModifiedUnix + realMetadata.expirationTtl
+
+  // if realMetadata.expirationTtl is 0, it should never expire
+  if (realMetadata.expirationTtl === 0) return false
+
   const nowUnix = Date.now() / 1000
   return nowUnix > shouldExpireTime
 }
