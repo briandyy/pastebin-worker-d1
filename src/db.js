@@ -37,10 +37,10 @@ const NotExistItemTemplate = {
   value: "Not found",
   metadata: {
     expirationTtl: 0,
-    postedAt: Date.toString(0), // Client never cache this
+    postedAt: Date.toString(Date.now() / 1000),
     passwd: "",
     filename: "",
-    lastModified: Date.toString(0),
+    lastModified: Date.toString(Date.now() / 1000),
   },
 }
 
