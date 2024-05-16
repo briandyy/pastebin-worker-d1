@@ -105,12 +105,14 @@ export async function handlePostOrPut(request, env, ctx, isPut) {
     if (isNaN(expirationSeconds)) {
       throw new WorkerError(400, `cannot parse expire ${expirationSeconds} as an number`)
     }
+    /** KV Only limitation
     if (expirationSeconds < 60) {
       throw new WorkerError(
         400,
         `due to limitation of Cloudflare, expire should be a integer greater than 60, '${expirationSeconds}' given`,
       )
     }
+    */
   }
 
   // check if name is legal
