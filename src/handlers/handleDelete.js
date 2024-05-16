@@ -5,7 +5,7 @@ export async function handleDelete(request, env, ctx) {
   const url = new URL(request.url)
   const { short, passwd } = parsePath(url.pathname)
   const item = await DB_GetWithMetadata(short, env)
-  if (safeAccess(item, value, null) === null) {
+  if (safeAccess(item, "value", null) === null) {
     throw new WorkerError(404, `paste of name '${short}' not found`)
   } else {
     if (passwd !== item.metadata?.passwd) {

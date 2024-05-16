@@ -132,7 +132,7 @@ export async function handlePostOrPut(request, env, ctx, isPut) {
   if (isPut) {
     const { short, passwd } = parsePath(url.pathname)
     const item = await DB_GetWithMetadata(short, env)
-    if (safeAccess(item, value, null) === null) {
+    if (safeAccess(item, "value", null) === null) {
       throw new WorkerError(404, `paste of name '${short}' is not found`)
     } else {
       const date = item.metadata?.postedAt

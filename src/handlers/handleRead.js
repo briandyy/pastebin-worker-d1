@@ -49,7 +49,7 @@ export async function handleGet(request, env, ctx) {
   const item = await DB_GetWithMetadata(short, env)
 
   // when paste is not found
-  if (safeAccess(item, value, null) === null) {
+  if (safeAccess(item, "value", null) === null) {
     throw new WorkerError(404, `paste of name '${short}' not found`)
   }
 
