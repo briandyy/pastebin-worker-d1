@@ -1,3 +1,4 @@
+
 name = "pb"
 compatibility_date = "2023-01-28"
 compatibility_flags = [ "nodejs_compat" ]
@@ -15,22 +16,22 @@ rules = [
 
 [[routes]]
 # Refer to https://developers.cloudflare.com/workers/wrangler/configuration/#routes
-pattern = "pastes.lwd-temp.top"
+pattern = "pastee.briandy.me"
 custom_domain = true
 
 [[kv_namespaces]]
 # name = "pastebin-worker"
 binding = "KV" # DO NOT MODIFY
-id = "701a14e6aeb44a09a678f16567cb9c20"  # id of your KV namespace
+id = "3b33633094ef4a8fa9f36be4bdb8f0b4"  # id of your KV namespace
 
 [[d1_databases]]
 binding = "DB" # DO NOT MODIFY
 database_name = "pastebin-worker"
-database_id = "77e9dafa-8f6b-4636-94f0-1a8e6e0e5fc1" # id of your D1 database
+database_id = "49f019ac-4b44-4364-8809-f72de98af590" # id of your D1 database
 
 [vars]
 # must be consistent with your routes
-BASE_URL = "https://pastes.lwd-temp.top"
+BASE_URL = "pastee.briandy.me"
 
 # url to repo, displayed in index page
 REPO = "https://github.com/lwd-temp/pastebin-worker-d1"
